@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addTodo } from './todoSlice';
-import { AppDispatch } from '../../app/store';
-import '../../styles/style.sass';
+import { observer } from 'mobx-react-lite';
+import { todoStore } from '../stores/todoStore';
 
-export const AddTodo: React.FC = () => {
+export const AddTodo: React.FC = observer(() => {
     const [text, setText] = useState<string>('');
-    const dispatch: AppDispatch = useDispatch();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (text) {
-            dispatch(addTodo(text));
+            todoStore.addTodo(text);
             setText('');
         }
     };
@@ -26,4 +23,4 @@ export const AddTodo: React.FC = () => {
             <button type="submit">Add Todo</button>
         </form>
     );
-};
+});
